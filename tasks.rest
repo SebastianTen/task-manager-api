@@ -1,55 +1,30 @@
-
-@baseUrl = http://localhost:3000/tasks
-
-### Get all tasks
-GET {{baseUrl}}
-Content-Type: application/json
-
-### Get task by ID
-GET {{baseUrl}}/1
-Accept: application/json
-
-### Create a task
-POST {{baseUrl}}
+### Create Task
+POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
-  "title": "Test Task 1",
-  "description": "This is a test task"
+  "id": "uuid",
+  "title": "SAFSDFSDFSDF",
+  "description": "jooSDFSDFSDFSDoo",
+  "completed": false,
+  "createdAt": "2026-02-14T16:00:00.000Z"
 }
-### Create another task
-POST {{baseUrl}}
+
+### Get All Tasks
+GET http://localhost:3000/tasks
+
+### Get Task by ID
+@taskId = 69c7e9aa-8b5c-407b-908a-bc4c99ddf57e
+GET http://localhost:3000/tasks/{{taskId}}
+
+### Update Task (Partial)
+PATCH http://localhost:3000/tasks/{{taskId}}
 Content-Type: application/json
 
 {
-  "title": "Another Task",
-  "description": "Second test task"
+  "completed": false,
+  "description": "p34RSDFDFaaaaaaaaaaDF"
 }
 
-### Update a task
-PATCH  {{baseUrl}}/1
-Content-Type: application/json
-
-{
-  "title": "Updated Task 1",
-  "completed": true
-}
-
-### Update a task partially
-PATCH {{baseUrl}}/2
-Content-Type: application/json
-
-{
-  "description": "Updated description only"
-}
-
-### 7️⃣ Delete a task
-DELETE {{baseUrl}}/1
-Accept: application/json
-
-### 8️⃣ Verify deletion
-GET {{baseUrl}}/1
-Accept: application/json
-
-
-
+### Delete Task
+DELETE http://localhost:3000/tasks/{{taskId}}
