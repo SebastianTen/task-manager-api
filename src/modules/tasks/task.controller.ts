@@ -5,6 +5,7 @@ import {
   updateTaskSchema,
   taskQuerySchema
 } from "./task.schema.js";
+import { getTaskQuerySchema } from "../utils/taskValidator.js";
 
 import type { CreateTaskDTO, UpdateTaskDTO } from "./task.schema.js";
 
@@ -57,7 +58,7 @@ export const deleteTaskHandler = (req: Request<{ id: string }>, res: Response) =
 };
 
 export const getTasksHandler = (req: Request, res: Response) => {
-  const parsed = taskQuerySchema.safeParse(req.query);
+  const parsed = getTaskQuerySchema.safeParse(req.query);
   if (!parsed.success) return res.status(400).json(parsed.error);
 
   const tasks = taskService.getTasks(parsed.data);

@@ -1,6 +1,7 @@
 import type { Task } from "./task.types.js";
 import type { CreateTaskDTO, UpdateTaskDTO, TaskQueryOptions } from "./task.schema.js"
 import { randomUUID } from "crypto";
+import { toLowerCase } from "zod";
 
 
 let tasks: Task[] = [];
@@ -46,28 +47,30 @@ export const deleteTask = (id: string): boolean => {
     return tasks.length < lengthBefore;
 };
 
-export const getTasks = (options: TaskQueryOptions = {}): Task[] => {
-  let result = [...tasks];
+export const getTasks = (options?: TaskQueryOptions): Task[] => {
+  let filtered = [...tasks];
 
-  if (options.completed !== undefined) {
-    result = result.filter(t => t.completed === options.completed);
+  if (options?.completed !== undefined) {
+    filtered = filtered.filter(t => t.completed === options.completed);
   }
 
-  if (options.search) {
-    result = result.filter(t =>
-      t.title.includes(options.search!) || t.description?.includes(options.search!)
+  if (options?.search) {
+    const term = options.search.toLowerCase();
+    filtered = filtered.filter(t =>
+      t.title.toLowerCase().includes(term) || t.description?.toLowerCase().includes(term)
     );
   }
 
-  if (options.sort) {
-    result.sort((a, b) => {
-      const aDate = a[options.sort!];
-      const bDate = b[options.sort!];
-      return (aDate && bDate ? aDate.getTime() - bDate.getTime() : 0);
+  if (options?.sort) {
+    filtered.sort((a, b) => {
+      const key = options.sort!;
+      const aValue = a[key] ?? 0;
+      const bValue = b[key] ?? 0;
+      return aValue > bValue ? 1 : -1;
     });
   }
 
-  return result;
+  return filtered;
 };
 
 

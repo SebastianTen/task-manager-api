@@ -6,3 +6,9 @@ export interface Task {
     createdAt: Date;
     completedAt?: Date;
 }
+
+export type TaskQueryOptions = Partial<{
+    search: string;
+    completed: boolean;
+    sort: "createdAt" | "completedAt";
+}>;

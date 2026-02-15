@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "id": "uuid",
-  "title": "SAFSDFSDFSDF",
+  "title": "TypeScript 4",
   "description": "jooSDFSDFSDFSDoo",
   "completed": false,
   "createdAt": "2026-02-14T16:00:00.000Z"
@@ -14,7 +14,7 @@ Content-Type: application/json
 GET http://localhost:3000/tasks
 
 ### Get Task by ID
-@taskId = 69c7e9aa-8b5c-407b-908a-bc4c99ddf57e
+@taskId = f7476f43-1202-4faa-9f4f-2b58e28c6eba
 GET http://localhost:3000/tasks/{{taskId}}
 
 ### Update Task (Partial)
@@ -22,9 +22,22 @@ PATCH http://localhost:3000/tasks/{{taskId}}
 Content-Type: application/json
 
 {
-  "completed": false,
-  "description": "p34RSDFDFaaaaaaaaaaDF"
+  "title": "Python",
+  "description": "TypeScript",
+  "completed": true
 }
+
+### Get only completed tasks
+GET http://localhost:3000/tasks?completed=true
+
+### Search tasks containing "TypeScript"
+GET http://localhost:3000/tasks?search=TypeScript
+
+### Sort tasks by completion date
+GET http://localhost:3000/tasks?sort=completedAt
+
+### Combine search + filter + sort
+GET http://localhost:3000/tasks?search=TypeScript&completed=true&sort=createdAt
 
 ### Delete Task
 DELETE http://localhost:3000/tasks/{{taskId}}
